@@ -9,48 +9,62 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
+      title: 'App Icon',
       theme: ThemeData(colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple)),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: Home(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-  final String title;
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
+class Home extends StatelessWidget {
+  const Home({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text('You have pushed the button this many times:'),
-            Text('$_counter', style: Theme.of(context).textTheme.headlineMedium),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Center(
+            child:
+                //App Icon ( Android & iOS)
+                Image.asset('assets/icons/app_icon.png', height: 72, width: 72),
+          ),
+          SizedBox(height: 20),
+          //Background and Foreground Adds Up To Make App Icon Adaptive ( Android )
+          DecoratedBox(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/icons/app_icon_background.png'),
+                fit: BoxFit.cover,
+              ),
+            ),
+            child: Image.asset('assets/icons/app_icon_foreground.png', height: 72, width: 72),
+          ),
+          SizedBox(height: 20),
+          //App Icon Change With Theme Color ( Android )
+          DecoratedBox(
+            decoration: BoxDecoration(color: Colors.lightGreen.shade100),
+            child: Image.asset(
+              'assets/icons/app_icon_monochrome.png',
+              height: 72,
+              width: 72,
+              color: Colors.green,
+            ),
+          ),
+          SizedBox(height: 20),
+          //App Icon Change With Theme Color ( iOS )
+          DecoratedBox(
+            decoration: BoxDecoration(color: Colors.black),
+            child: Image.asset(
+              'assets/icons/app_icon_transparent.png',
+              height: 72,
+              width: 72,
+              color: Colors.red,
+            ),
+          ),
+        ],
       ),
     );
   }
